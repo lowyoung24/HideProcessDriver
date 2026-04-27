@@ -27,14 +27,21 @@ jobs:
       run: |
         msbuild HideProcessMini.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild
         
+    - name: List build output
+      run: |
+        Write-Host "=== Build output directory ==="
+        if (Test-Path "HideProcessMini\x64\Release") {
+            Get-ChildItem -Path "HideProcessMini\x64\Release" -Recurse | Format-Table Name, Length
+        }
+        
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: driver-build
         path: |
           HideProcessMini/x64/Release/
-          !**/*.obj
           
-    - name: Check files
+    - name: Check all files
       run: |
-        Get-ChildItem -Path . -Recurse | Select-Object Name, Length
+        Write-Host "=== All files in repository ==="
+        Get-ChildItem -Path . -Recurse -File | Select-Object Name, @{Name="Size(KB)";Expression={[math]::Round($_.Length/1KB,2)}} | Format-Table -AutoSize
