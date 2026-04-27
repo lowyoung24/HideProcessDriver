@@ -1,0 +1,56 @@
+;
+; HideProcessMini.inf
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider    = %ManufacturerName%
+CatalogFile = HideProcessMini.cat
+DriverVer   =
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+HideProcessMini.sys = 1,,
+
+[Manufacturer]
+%ManufacturerName% = Standard,NT$ARCH$.10.0
+
+[Standard.NT$ARCH$.10.0]
+%HideProcessMini.DeviceDesc% = KmdfKernelCheat_Device, Root\HideProcessMini
+
+[KmdfKernelCheat_Device.NT]
+CopyFiles = File_Copy
+
+[File_Copy]
+HideProcessMini.sys
+
+[KmdfKernelCheat_Device.NT.Services]
+AddService = HideProcessMini,%SPSVCINST_ASSOCSERVICE%, KmdfKernelCheat_Service_Inst
+
+[KmdfKernelCheat_Service_Inst]
+DisplayName    = %HideProcessMini.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\HideProcessMini.sys
+
+[KmdfKernelCheat_Device.NT.Wdf]
+KmdfService = HideProcessMini, KmdfKernelCheat_wdfsect
+
+[KmdfKernelCheat_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName = "HideProcessDeveloper"
+DiskName = "HideProcessMini Installation Disk"
+HideProcessMini.DeviceDesc = "HideProcessMini Device"
+HideProcessMini.SVCDESC = "HideProcessMini Service"

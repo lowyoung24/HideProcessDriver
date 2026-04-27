@@ -1,0 +1,59 @@
+# Build outputs
+*.obj
+*.o
+*.exe
+*.dll
+*.sys
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.idb
+*.res
+*.sbr
+*.bsc
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.tlog
+*.log
+*.log.json
+*.rsp
+*.lastcodeanalysissucceeded
+*.manifest
+*.vcxproj.filters
+*.vcxproj.user
+
+# Visual Studio cache/options directory
+.vs/
+
+# NuGet packages
+packages/
+
+# Build directories
+x64/
+x86/
+Win32/
+ARM/
+ARM64/
+Debug/
+Release/
+bin/
+obj/
+
+# EWDK and ISO files
+*.iso
+LaunchBuildEnv.cmd
+SetupVSEnv.cmd
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+Thumbs.db
+
+# Driver signing
+*.cat
+*.cer
+*.pfx
