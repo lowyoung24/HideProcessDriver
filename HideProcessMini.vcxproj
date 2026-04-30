@@ -20,40 +20,32 @@
     <RootNamespace>HideProcessMini</RootNamespace>
     <ProjectName>HideProcessMini</ProjectName>
     <NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>
+    <TargetExt>.sys</TargetExt>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <TargetVersion>Windows10</TargetVersion>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
-    <ConfigurationType>Driver</ConfigurationType>
-    <DriverType>WDM</DriverType>
+    <PlatformToolset>v143</PlatformToolset>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <TargetVersion>Windows10</TargetVersion>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
-    <ConfigurationType>Driver</ConfigurationType>
-    <DriverType>WDM</DriverType>
+    <PlatformToolset>v143</PlatformToolset>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup>
     <WindowsSDKDesktopARMT64EngSupport>true</WindowsSDKDesktopARMT64EngSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\build\native\Microsoft.Windows.WDK.x64.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\build\native\Microsoft.Windows.WDK.x64.targets')" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>_M_AMD64;_AMD64_;_WIN64;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -62,20 +54,16 @@
       <AdditionalIncludeDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\shared;$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>/INTEGRITYCHECK /MACHINE:AMD64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/INTEGRITYCHECK /MACHINE:AMD64 /DRIVER %(AdditionalOptions)</AdditionalOptions>
       <AdditionalLibraryDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Lib\10.0.26100.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>native</SubSystem>
+      <SubSystem>Native</SubSystem>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
       <BaseAddress>0x10000</BaseAddress>
       <StackReserveSize>0x400000</StackReserveSize>
       <DataExecutionPrevention>true</DataExecutionPrevention>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <Inf>
-      <InfFileName>HideProcessMini.inf</InfFileName>
-      <InfDefinition>KmdfKernelCheat_Device.NT</InfDefinition>
-      <CatalogFile>HideProcessMini.cat</CatalogFile>
-    </Inf>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -84,27 +72,17 @@
       <AdditionalIncludeDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\shared;$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>/INTEGRITYCHECK /MACHINE:AMD64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/INTEGRITYCHECK /MACHINE:AMD64 /DRIVER %(AdditionalOptions)</AdditionalOptions>
       <AdditionalLibraryDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Lib\10.0.26100.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>native</SubSystem>
+      <SubSystem>Native</SubSystem>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
       <BaseAddress>0x10000</BaseAddress>
       <StackReserveSize>0x400000</StackReserveSize>
       <DataExecutionPrevention>true</DataExecutionPrevention>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <DriverSign>
-      <FileDigestAlgorithm>SHA256</FileDigestAlgorithm>
-    </DriverSign>
-    <Inf>
-      <InfFileName>HideProcessMini.inf</InfFileName>
-      <InfDefinition>KmdfKernelCheat_Device.NT</InfDefinition>
-      <CatalogFile>HideProcessMini.cat</CatalogFile>
-    </Inf>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <Inf Include="HideProcessMini.inf" />
-  </ItemGroup>
   <ItemGroup>
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>

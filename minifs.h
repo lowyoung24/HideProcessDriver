@@ -88,35 +88,4 @@ EXTERN_C NTKERNELAPI NTSTATUS IoDeleteSymbolicLink(PUNICODE_STRING SymbolicLinkN
 
 #define UNREFERENCED_PARAMETER(P) (void)(P)
 
-#define _In_
-#define NT_SUCCESS(Status) ((NTSTATUS)(Status) >= 0)
-
-typedef struct _DRIVER_OBJECT {
-    PVOID DriverStart;
-    ULONG DriverSize;
-    PVOID DriverSection;
-    PDRIVER_EXTENSION DriverExtension;
-    UNICODE_STRING DriverName;
-    PUNICODE_STRING HardwareDatabase;
-    PFAST_IO_DISPATCH FastIoDispatch;
-    PDRIVER_INITIALIZE DriverInit;
-    PDRIVER_STARTIO DriverStartIo;
-    PDRIVER_UNLOAD DriverUnload;
-    PDRIVER_DISPATCH MajorFunction[28];
-} DRIVER_OBJECT, *PDRIVER_OBJECT;
-
-typedef struct _DRIVER_EXTENSION {
-    struct _DRIVER_OBJECT *DriverObject;
-    UNICODE_STRING RegistryPath;
-} DRIVER_EXTENSION, *PDRIVER_EXTENSION;
-
-typedef VOID (*PDRIVER_STARTIO)(PDEVICE_OBJECT, PIRP);
-typedef NTSTATUS (*PDRIVER_DISPATCH)(PDEVICE_OBJECT, PIRP);
-
-typedef struct _IRP {
-    PVOID Type;
-} IRP, *PIRP;
-
-#define DbgPrint(Format, ...)
-
 #endif
