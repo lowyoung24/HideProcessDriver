@@ -19,6 +19,21 @@ typedef void (*PDRIVER_UNLOAD)(PVOID);
 typedef PVOID PDEVICE_OBJECT;
 typedef PVOID PEPROCESS;
 typedef PVOID PHANDLE;
+typedef PVOID HANDLE;
+typedef unsigned char BOOLEAN;
+typedef short CSHORT;
+
+#define TRUE 1
+#define FALSE 0
+
+#define _In_
+#define _Out_
+#define _In_opt_
+#define _Out_opt_
+
+#define NT_SUCCESS(Status) ((NTSTATUS)(Status) >= 0)
+
+#define DbgPrint(...) do { } while(0)
 
 typedef struct _LIST_ENTRY {
     struct _LIST_ENTRY *Flink;
@@ -30,6 +45,38 @@ typedef struct _UNICODE_STRING {
     USHORT MaximumLength;
     PWSTR Buffer;
 } UNICODE_STRING, *PUNICODE_STRING;
+
+typedef struct _DRIVER_OBJECT {
+    CSHORT Type;
+    CSHORT Size;
+    PDEVICE_OBJECT DeviceObject;
+    ULONG Flags;
+    PVOID DriverStart;
+    ULONG DriverSize;
+    PVOID DriverSection;
+    PDRIVER_EXTENSION DriverExtension;
+    UNICODE_STRING DriverName;
+    PUNICODE_STRING HardwareDatabase;
+    PFAST_IO_DISPATCH FastIoDispatch;
+    PDRIVER_INITIALIZE DriverInit;
+    PDRIVER_STARTIO DriverStartIo;
+    PDRIVER_UNLOAD DriverUnload;
+    PDRIVER_DISPATCH MajorFunction[28];
+} DRIVER_OBJECT, *PDRIVER_OBJECT;
+
+typedef struct _DRIVER_EXTENSION {
+    struct _DRIVER_OBJECT *DriverObject;
+    PVOID AddDevice;
+    PVOID DriverExtensionSize;
+} DRIVER_EXTENSION, *PDRIVER_EXTENSION;
+
+typedef struct _FAST_IO_DISPATCH {
+    ULONG SizeOfFastIoDispatch;
+} FAST_IO_DISPATCH, *PFAST_IO_DISPATCH;
+
+typedef VOID (*PDRIVER_STARTIO)(PDEVICE_OBJECT, PIRP);
+typedef NTSTATUS (*PDRIVER_DISPATCH)(PDEVICE_OBJECT, PIRP);
+typedef PVOID PIRP;
 
 typedef const UNICODE_STRING* PCUNICODE_STRING;
 
