@@ -1,6 +1,4 @@
-#include <ntdef.h>
-#include <ntifs.h>
-#include <windef.h>
+#include "minifs.h"
 
 DRIVER_INITIALIZE DriverEntry;
 DRIVER_UNLOAD DriverUnload;
