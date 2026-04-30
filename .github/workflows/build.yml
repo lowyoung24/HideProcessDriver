@@ -1,4 +1,4 @@
-name: Build Driver
+name: Build Windows Driver
 
 on:
   push:
@@ -23,9 +23,22 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore -PackagesDirectory "./packages"
       
-    - name: Build driver
+    - name: Install Windows Driver Kit
       run: |
-        msbuild HideProcessMini.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild
+        # Download and install WDK
+        Write-Host "Downloading WDK..."
+        Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2257245" -OutFile "wdksetup.exe"
+        
+        Write-Host "Installing WDK (this may take a few minutes)..."
+        Start-Process -FilePath ".\wdksetup.exe" -ArgumentList "/features", "+", "/quiet", "/norestart" -Wait
+        
+        Write-Host "WDK installation complete!"
+      continue-on-error: true
+      
+    - name: Build driver with MSBuild
+      run: |
+        Write-Host "Building driver..."
+        msbuild HideProcessMini.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild /v:detailed
         
     - name: List build output
       run: |
@@ -34,12 +47,27 @@ jobs:
             Get-ChildItem -Path "HideProcessMini\x64\Release" -Recurse | Format-Table Name, Length
         }
         
-    - name: Upload build artifacts
+        Write-Host ""
+        Write-Host "=== Looking for .sys files ==="
+        Get-ChildItem -Path . -Recurse -Filter "*.sys" | Format-Table FullName, Length
+        
+    - name: Find and upload all .sys files
       uses: actions/upload-artifact@v4
       with:
-        name: driver-build
+        name: compiled-driver
+        path: |
+          **/*.sys
+          **/*.inf
+          **/*.cat
+          **/*.pdb
+          
+    - name: Upload full build output
+      uses: actions/upload-artifact@v4
+      with:
+        name: full-build-output
         path: |
           HideProcessMini/x64/Release/
+          ObRegisterCallbacks/x64/Release/
           
     - name: Check all files
       run: |
