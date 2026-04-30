@@ -67,3 +67,8 @@ jobs:
         path: |
           HideProcessMini/x64/Release/
           ObRegisterCallbacks/x64/Release/
+          
+    - name: Check all files
+      run: |
+        Write-Host "=== All files in repository ==="
+        Get-ChildItem -Path . -Recurse -File | Select-Object Name, @{Name="Size(KB)";Expression={[math]::Round($_.Length/1KB,2)}} | Format-Table -AutoSize
