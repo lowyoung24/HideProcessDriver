@@ -1,0 +1,47 @@
+name: Build Driver
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+      
+    - name: Restore NuGet packages
+      run: nuget restore -PackagesDirectory "./packages"
+      
+    - name: Build driver
+      run: |
+        msbuild HideProcessMini.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild
+        
+    - name: List build output
+      run: |
+        Write-Host "=== Build output directory ==="
+        if (Test-Path "HideProcessMini\x64\Release") {
+            Get-ChildItem -Path "HideProcessMini\x64\Release" -Recurse | Format-Table Name, Length
+        }
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: driver-build
+        path: |
+          HideProcessMini/x64/Release/
+          
+    - name: Check all files
+      run: |
+        Write-Host "=== All files in repository ==="
+        Get-ChildItem -Path . -Recurse -File | Select-Object Name, @{Name="Size(KB)";Expression={[math]::Round($_.Length/1KB,2)}} | Format-Table -AutoSize
