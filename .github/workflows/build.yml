@@ -23,21 +23,20 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore -PackagesDirectory "./packages"
       
-    - name: Install Windows Driver Kit
+    - name: Check Windows Kits directory
       run: |
-        # Download and install WDK
-        Write-Host "Downloading WDK..."
-        Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2257245" -OutFile "wdksetup.exe"
+        Write-Host "=== Checking Windows Kits ==="
+        Get-ChildItem "C:\Program Files (x86)\Windows Kits" -Directory -ErrorAction SilentlyContinue | Format-Table Name
         
-        Write-Host "Installing WDK (this may take a few minutes)..."
-        Start-Process -FilePath ".\wdksetup.exe" -ArgumentList "/features", "+", "/quiet", "/norestart" -Wait
+    - name: Find kernel mode libraries
+      run: |
+        Write-Host "=== Looking for kernel mode libraries ==="
+        Get-ChildItem "C:\Program Files (x86)\Windows Kits" -Recurse -Filter "ntoskrnl.lib" -ErrorAction SilentlyContinue | Format-Table FullName
+        Get-ChildItem "C:\Program Files (x86)\Windows Kits" -Recurse -Filter "wdm.lib" -ErrorAction SilentlyContinue | Format-Table FullName
         
-        Write-Host "WDK installation complete!"
-      continue-on-error: true
-      
     - name: Build driver with MSBuild
       run: |
-        Write-Host "Building driver..."
+        Write-Host "=== Building driver ==="
         msbuild HideProcessMini.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild /v:detailed
         
     - name: List build output
@@ -68,8 +67,3 @@ jobs:
         path: |
           HideProcessMini/x64/Release/
           ObRegisterCallbacks/x64/Release/
-          
-    - name: Check all files
-      run: |
-        Write-Host "=== All files in repository ==="
-        Get-ChildItem -Path . -Recurse -File | Select-Object Name, @{Name="Size(KB)";Expression={[math]::Round($_.Length/1KB,2)}} | Format-Table -AutoSize
