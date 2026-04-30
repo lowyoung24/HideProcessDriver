@@ -51,11 +51,11 @@
       <PreprocessorDefinitions>_M_AMD64;_AMD64_;_WIN64;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <TreatWarningAsError>false</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\shared;$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\shared;$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\km;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalOptions>/INTEGRITYCHECK /MACHINE:AMD64 /DRIVER %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Lib\10.0.26100.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Lib\10.0.26100.0\km\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Native</SubSystem>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
@@ -69,11 +69,11 @@
     <ClCompile>
       <PreprocessorDefinitions>_M_AMD64;_AMD64_;_WIN64;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\shared;$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\shared;$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Include\10.0.26100.0\km;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalOptions>/INTEGRITYCHECK /MACHINE:AMD64 /DRIVER %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Lib\10.0.26100.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(NuGetPackageRoot)microsoft.windows.wdk.x64\10.0.26100.6584\c\Lib\10.0.26100.0\km\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Native</SubSystem>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
